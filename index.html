@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baixar Vídeo do YouTube</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Baixar Vídeo do YouTube</h1>
+        <form id="video-form">
+            <input type="text" id="video-url" name="url" placeholder="Cole o link do vídeo do YouTube" required>
+            <button type="submit">Buscar Qualidades</button>
+        </form>
+        <div id="searching-indicator" class="hidden">
+            <p>Buscando...</p>
+        </div>
+        <div id="quality-selection" class="hidden">
+            <h2>Escolha a qualidade:</h2>
+            <div id="quality-options" class="quality-options"></div>
+        </div>
+        <div id="loading-indicator" class="hidden">
+            <p>Baixando... <span id="progress">0%</span></p>
+        </div>
+        <div id="completion-message" class="hidden">
+            <p>Seu vídeo foi baixado!</p>
+        </div>
+    </div>
+    <script src="static/script.js"></script>
+</body>
+</html>
