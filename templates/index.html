@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baixar Vídeo do YouTube</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Baixar Video do YouTube</title>
+    <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Baixar Vídeo do YouTube</h1>
+        <h1>Baixar Video do YouTube</h1>
         <form id="video-form">
-            <input type="text" id="video-url" name="url" placeholder="Cole o link do vídeo do YouTube" required>
+            <input type="text" id="video-url" name="url" placeholder="Cole o link do video do YouTube" required>
             <button type="submit">Buscar Qualidades</button>
         </form>
         <div id="searching-indicator" class="hidden">
@@ -24,9 +24,9 @@
             <p>Baixando... <span id="progress">0%</span></p>
         </div>
         <div id="completion-message" class="hidden">
-            <p>Seu vídeo foi baixado!</p>
+            <p>Seu video foi baixado!</p>
         </div>
     </div>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="static/script.js"></script>
 </body>
 </html>

@@ -30,7 +30,7 @@ function processVideoInfo(data, url) {
     qualityOptions.innerHTML = '';
 
     data.formats.forEach(format => {
-        if (format.resolution !== 'Áudio') {
+        if (format.resolution !== 'Audio') {
             createQualityButton(format, url, qualityOptions);
         }
     });
@@ -60,27 +60,23 @@ function downloadVideo(url, quality) {
     }).then(response => {
         if (response.ok) {
             return response.blob().then(blob => {
-                const downloadLink = document.createElement('a');
-                downloadLink.href = URL.createObjectURL(blob);
-                downloadLink.download = `${quality}.mp4`;
-                downloadLink.click();
-                
-                // Update the message after download
-                progressSpan.textContent = '';
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = '';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
                 completionMessage.classList.remove('hidden');
-                setTimeout(() => {
-                    loadingIndicator.classList.add('hidden');
-                    completionMessage.classList.add('hidden');
-                }, 3000); // Hide message after 3 seconds
             });
         } else {
-            return response.json().then(data => { throw new Error(data.error); });
+            return response.json().then(data => {
+                throw new Error(data.error || 'Erro desconhecido.');
+            });
         }
-    }).catch(error => {
-        alert('Erro: ' + error.message);
-        progressSpan.textContent = 'Erro ao baixar o vídeo';
-        loadingIndicator.classList.add('hidden');
-    });
+    }).catch(error => alert('Erro: ' + error.message))
+      .finally(() => loadingIndicator.classList.add('hidden'));
 }
 
 function showSearchingIndicator() {

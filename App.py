@@ -1,9 +1,11 @@
 import os
 import re
 from flask import Flask, request, jsonify, send_file, render_template_string
+from flask_cors import CORS
 import yt_dlp as youtube_dl
 
 app = Flask(__name__)
+CORS(app)
 
 def sanitize_filename(filename):
     return re.sub(r'[<>:"/\\|?*\x00-\x1F]', '', filename).strip()
@@ -22,7 +24,7 @@ def index():
 def get_info():
     url = request.form.get('url')
     if not url:
-        return jsonify({'error': 'URL não fornecida.'}), 400
+        return jsonify({'error': 'URL nao fornecida.'}), 400
 
     ydl_opts = {'format': 'bestaudio/best', 'quiet': True}
 
@@ -33,7 +35,7 @@ def get_info():
             all_formats = extract_formats(formats)
 
             if not all_formats:
-                return jsonify({'error': 'Nenhuma qualidade de vídeo disponível.'}), 404
+                return jsonify({'error': 'Nenhuma qualidade de video disponivel.'}), 404
 
             return jsonify({'formats': list(all_formats.values())})
     except Exception as e:
@@ -53,7 +55,7 @@ def extract_formats(formats):
         elif f.get('acodec') and f['acodec'] != 'none':
             all_formats[format_id] = {
                 'format_id': format_id,
-                'resolution': 'Áudio',
+                'resolution': 'Audio',
                 'ext': f.get('ext')
             }
     return all_formats
@@ -63,7 +65,7 @@ def download():
     url = request.form.get('url')
     quality = request.form.get('quality')
     if not url or not quality:
-        return jsonify({'error': 'URL ou qualidade não fornecida.'}), 400
+        return jsonify({'error': 'URL ou qualidade nao fornecida.'}), 400
 
     try:
         output_dir_path = create_output_dir('downloads')
@@ -80,7 +82,7 @@ def download():
         if os.path.exists(file_path):
             return send_file(file_path, as_attachment=True)
         else:
-            return jsonify({'error': 'Arquivo não encontrado.'}), 404
+            return jsonify({'error': 'Arquivo nao encontrado.'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
