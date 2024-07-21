@@ -1,0 +1,11 @@
+[build]
+  command = "pip install -r requirements.txt && python App.py freezer"
+  publish = "build"
+
+[build.environment]
+  PYTHON_VERSION = "3.9"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
